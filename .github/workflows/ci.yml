@@ -1,4 +1,4 @@
-name: Parallel Jobs Workflow
+name: Sequential Jobs Workflow
 
 on: [push]
 
@@ -13,12 +13,13 @@ jobs:
       - name: Build application
         run: echo "Building the application..."
 
-  test:
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run tests
-        run: echo "Running tests..."
+      - name: Deploy application
+        run: echo "Deploying the application..."
