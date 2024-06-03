@@ -1,4 +1,4 @@
-name: Sequential Jobs Workflow
+name: Combined Jobs Workflow
 
 on: [push]
 
@@ -13,8 +13,28 @@ jobs:
       - name: Build application
         run: echo "Building the application..."
 
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: echo "Running tests..."
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Lint code
+        run: echo "Linting code..."
+
   deploy:
-    needs: build
+    needs: [build, test, lint]
     runs-on: ubuntu-latest
 
     steps:
